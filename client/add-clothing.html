@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Clothing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Add Clothing Item</h1>
+  <form id="clothing-form" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*" required><br>
+    <input type="text" name="tags" placeholder="Tags (e.g., casual, summer)"><br>
+    <input type="text" name="category" placeholder="Category (e.g., shirt)"><br>
+    <input type="text" name="color" placeholder="Color"><br>
+    <input type="text" name="size" placeholder="Size"><br>
+    <button type="submit">Upload</button>
+  </form>
+
+  <script>
+    document.getElementById('clothing-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      const res = await fetch('http://localhost:3000/api/upload-clothing', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      alert(data.message);
+    });
+  </script>
+</body>
+</html>
