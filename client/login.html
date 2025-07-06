@@ -4,26 +4,78 @@
   <meta charset="UTF-8">
   <title>Login / Sign Up</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('images/login.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input[type="email"], input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-  <h1>Wardrobe Organizer</h1>
+  <div class="container">
+    <h1>Wardrobe Organizer</h1>
 
-  <h2>Sign Up</h2>
-  <form id="signup-form">
-    <input type="email" placeholder="Email" name="email" required><br>
-    <input type="password" placeholder="Password" name="password" required><br>
-    <button type="submit">Sign Up</button>
-  </form>
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      <input type="email" placeholder="Email" name="email" required><br>
+      <input type="password" placeholder="Password" name="password" required><br>
+      <button type="submit">Sign Up</button>
+    </form>
 
-  <h2>Login</h2>
-  <form id="login-form">
-    <input type="email" placeholder="Email" name="email" required><br>
-    <input type="password" placeholder="Password" name="password" required><br>
-    <button type="submit">Login</button>
-  </form>
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="email" placeholder="Email" name="email" required><br>
+      <input type="password" placeholder="Password" name="password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
 
   <script>
-    // Sample logic – will link this to backend later
     document.getElementById('signup-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
