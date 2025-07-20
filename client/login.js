@@ -19,19 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = await response.json();
         console.log('🔁 Backend response:', data);
+
         if (response.ok) {
           alert('Login successful');
-
-          // Store token and optionally role
           localStorage.setItem('token', data.token);
           localStorage.setItem('role', data.role);
 
-          // Redirect to the appropriate page
-          if (data.role === 'admin') {
-            window.location.href = 'admin-dashboard.html';
-          } else {
-            window.location.href = 'outfit-planner.html'; // Or your main user page
-          }
+          // Redirect to the new home page
+          window.location.href = 'home.html';
         } else {
           alert(`Login failed: ${data.message || 'Invalid credentials'}`);
         }

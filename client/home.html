@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-image: url('images/home.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      color: #222;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Your Wardrobe Organizer</h1>
+    <div id="nav-grid" class="grid"></div>
+  </div>
+
+  <script>
+    const role = localStorage.getItem('role');
+    const grid = document.getElementById('nav-grid');
+
+    const cards = [
+      { label: 'Outfit Planner 👗', url: 'outfit-planner.html' },
+      { label: 'Add Clothing ➕', url: 'add-clothing.html' }
+    ];
+
+    if (role === 'admin') {
+      cards.push(
+        { label: 'Admin Dashboard 🛠', url: 'admin-dashboard.html' },
+        { label: 'Analytics Dashboard 📊', url: 'admin-analytics.html' }
+      );
+    }
+
+    cards.forEach(card => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.textContent = card.label;
+      div.onclick = () => window.location.href = card.url;
+      grid.appendChild(div);
+    });
+  </script>
+  <script src="header.js"></script>
+</body>
+</html>

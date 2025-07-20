@@ -6,7 +6,33 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Outfit Planner</h1>
-  <p>This is a placeholder page for the outfit planner. Future enhancements will allow drag-and-drop functionality and random outfit generation.</p>
+  <div class="container">
+    <h1>Outfit Planner</h1>
+
+    <section>
+      <label for="category-filter">Filter by category:</label>
+      <select id="category-filter">
+        <option value="">All</option>
+        <option value="tops">Tops</option>
+        <option value="bottoms">Bottoms</option>
+        <option value="shoes">Shoes</option>
+        <option value="pants">Pants</option>
+      </select>
+    </section>
+
+    <div id="clothing-grid" class="grid"></div>
+
+    <h2>Selected Outfit</h2>
+    <ul id="selected-outfit"></ul>
+
+    <button id="save-outfit">Save Outfit</button>
+
+    <h2>Planned Outfits</h2>
+    <div id="planned-outfits" class="grid"></div>
+
+  </div>
+
+  <script src="outfit-planner.js"></script>
+  <script src="header.js"></script>
 </body>
 </html>

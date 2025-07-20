@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Analytics Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+  <div class="container"></div>
+  <h1>Admin Analytics Dashboard</h1>
+
+  <!-- User Stats Section -->
+  <section>
+    <h2>User Statistics</h2>
+    <div class="stats">
+      <div>
+        <p>Total Users</p>
+        <h3 id="total-users">-</h3>
+      </div>
+      <div>
+        <p>Active Users</p>
+        <h3 id="active-users">-</h3>
+      </div>
+      <div>
+        <p>Inactive Users</p>
+        <h3 id="inactive-users">-</h3>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="userChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Clothing Breakdown Section -->
+  <section>
+    <h2>Clothing Item Categories</h2>
+    <div class="chart-container">
+      <canvas id="clothingChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section>
+    <h2>Filter Options</h2>
+    <label>Date Range:
+      <input type="date" id="start-date"> to 
+      <input type="date" id="end-date">
+    </label>
+    <br><br>
+    <label>User Role:
+      <select id="role-filter">
+        <option value="">All</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </label>
+  </section>
+
+  <script src="analytics.js"></script>
+  <script src="header.js"></script>
+</body>
+</html>
