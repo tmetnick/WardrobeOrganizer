@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
 
-  const API_BASE = 'http://localhost:3000'; // ✅ Use backend port
+  const API_BASE = 'http://localhost:3000'; //  Use backend port
 
   if (!token || role !== "admin") {
     alert("Access denied. Admins only.");

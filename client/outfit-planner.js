@@ -85,17 +85,57 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const data = await res.json();
     if (res.ok) {
-      alert('✅ Outfit saved!');
+      alert('Outfit saved!');
       selectedItems = [];
       updateSelectedList();
       renderClothing(allClothes);
+      await loadPlannedOutfits(); // Load updated outfits after saving
     } else {
-      alert('❌ Failed to save outfit: ' + data.message);
+      alert('Failed to save outfit: ' + data.message);
     }
   });
 
   // Category filter
   categoryFilter.addEventListener('change', () => renderClothing(allClothes));
+
+  // Load and display saved outfits
+  async function loadPlannedOutfits() {
+    const res = await fetch(`http://localhost:3000/api/outfits/user/${email}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const outfits = await res.json();
+    console.log('Saved outfits:', outfits);
+
+    const container = document.getElementById('planned-outfits');
+    container.innerHTML = '';
+
+    outfits.forEach(outfit => {
+      const card = document.createElement('div');
+      card.className = 'outfit-card';
+
+      const title = document.createElement('h3');
+      title.textContent = outfit.name;
+      card.appendChild(title);
+
+      const imgs = document.createElement('div');
+      imgs.className = 'outfit-images';
+
+      outfit.clothingItems.forEach(item => {
+        const img = document.createElement('img');
+        img.src = `http://localhost:3000${item.imageUrl}`;
+        img.alt = item.name || 'clothing item';
+        img.style.width = '80px';
+        img.style.margin = '5px';
+        imgs.appendChild(img);
+      });
+
+      card.appendChild(imgs);
+      container.appendChild(card);
+    });
+  }
+
+  await loadPlannedOutfits(); // Call when page loads
 });
 
 // Decode token to extract email

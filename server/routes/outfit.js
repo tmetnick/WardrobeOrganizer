@@ -28,5 +28,18 @@ router.post('/create', async (req, res) => {
   }
 });
 
+// GET /api/outfits/user/:email
+router.get('/user/:email', async (req, res) => {
+  try {
+    const outfits = await Outfit.find({ userEmail: req.params.email })
+      .populate('clothingItems'); // ⬅️ This is KEY for showing clothing info
+
+    res.json(outfits);
+  } catch (err) {
+    console.error('Error fetching outfits:', err);
+    res.status(500).json({ message: 'Error fetching outfits' });
+  }
+});
+
 module.exports = router;
 

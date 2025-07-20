@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const isAdmin = require('../middleware/isAdmin'); // ✅ Needed for admin routes
 
 // Ensure upload folder exists
 const uploadDir = path.join(__dirname, '../uploads');
@@ -12,6 +13,7 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
+// Multer config
 const storage = multer.diskStorage({
   destination: uploadDir,
   filename: (req, file, cb) => {
@@ -21,16 +23,19 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Upload route
+/**
+ * POST /upload
+ * Upload a clothing item with image
+ */
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const imageUrl = `/uploads/${req.file.filename}`;
 
-    console.log('🔐 Decoded token email:', decoded.email);
-    console.log('📦 req.body:', req.body);
-    console.log('🖼 Uploaded file:', req.file);
+    console.log(' Decoded token email:', decoded.email);
+    console.log(' req.body:', req.body);
+    console.log(' Uploaded file:', req.file);
 
     const item = new ClothingItem({
       name: req.body.name,
@@ -38,7 +43,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       category: req.body.category.toLowerCase(),
       color: req.body.color,
       userEmail: decoded.email,
-      status: 'approved'
+      status: 'approved' // You can change this to 'pending' if moderation is required before approval
     });
 
     await item.save();
@@ -49,7 +54,54 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-// Get items by user
+/**
+ * PATCH /:id/moderate
+ * Admin updates status of clothing item (approve/reject)
+ */
+router.patch('/:id/moderate', isAdmin, async (req, res) => {
+  try {
+    const item = await ClothingItem.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status },
+      { new: true }
+    );
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to update item status' });
+  }
+});
+
+/**
+ * DELETE /admin/clothes/:id
+ * Admin deletes a clothing item
+ */
+router.delete('/admin/clothes/:id', isAdmin, async (req, res) => {
+  try {
+    await ClothingItem.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Item deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete item' });
+  }
+});
+
+/**
+ * GET /admin/clothes
+ * Admin fetches all clothing items
+ */
+router.get('/admin/clothes', isAdmin, async (req, res) => {
+  try {
+    const items = await ClothingItem.find();
+    res.json(items);
+  } catch (err) {
+    console.error('Error fetching clothing items:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+/**
+ * GET /user/:email
+ * User or admin fetches clothing items by user email
+ */
 router.get('/user/:email', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -60,7 +112,6 @@ router.get('/user/:email', async (req, res) => {
       return res.status(403).json({ message: 'Access denied' });
     }
 
-    // ✅ Only fetch approved clothing
     const clothes = await ClothingItem.find({ 
       userEmail: req.params.email, 
       status: 'approved' 

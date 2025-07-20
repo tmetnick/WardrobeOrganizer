@@ -28,7 +28,6 @@ h1, h2 {
 .stats div {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   padding: 1rem 2rem;
   min-width: 150px;
   text-align: center;
@@ -44,7 +43,6 @@ h1, h2 {
   background: #fff;
   border-radius: 12px;
   padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   max-width: 800px;
 }
 
@@ -53,7 +51,7 @@ input, select, button {
   padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0.5rem;
 }
 
 button {
@@ -86,4 +84,28 @@ button:hover {
 
 .grid-item:hover {
   background-color: #e3f2fd;
+}
+
+.outfit-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 10px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.outfit-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Fix for stretched planned outfit images */
+#planned-outfits img {
+  height: 150px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 5px;
 }

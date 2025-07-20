@@ -14,7 +14,6 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: white;
-      text-shadow: 0 0 5px rgba(0,0,0,0.8);
     }
 
     h1 {
@@ -35,7 +34,6 @@
       color: #222;
       padding: 1.5rem;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       text-align: center;
       cursor: pointer;
       transition: transform 0.2s ease;
@@ -57,14 +55,14 @@
     const grid = document.getElementById('nav-grid');
 
     const cards = [
-      { label: 'Outfit Planner 👗', url: 'outfit-planner.html' },
-      { label: 'Add Clothing ➕', url: 'add-clothing.html' }
+      { label: 'Outfit Planner ', url: 'outfit-planner.html' },
+      { label: 'Add Clothing ', url: 'add-clothing.html' }
     ];
 
     if (role === 'admin') {
       cards.push(
-        { label: 'Admin Dashboard 🛠', url: 'admin-dashboard.html' },
-        { label: 'Analytics Dashboard 📊', url: 'admin-analytics.html' }
+        { label: 'Admin Dashboard ', url: 'admin-dashboard.html' },
+        { label: 'Analytics Dashboard ', url: 'admin-analytics.html' }
       );
     }
 
