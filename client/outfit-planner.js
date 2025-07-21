@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
   const email = parseJwt(token).email;
 
+  const API_BASE = 'https://wardrobeorganizer.onrender.com';
+
   const grid = document.getElementById('clothing-grid');
   const selectedList = document.getElementById('selected-outfit');
   const categoryFilter = document.getElementById('category-filter');
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let selectedItems = [];
 
   // Fetch clothing
-  const res = await fetch(`http://localhost:3000/api/clothes/user/${email}`, {
+  const res = await fetch(`${API_BASE}/api/clothes/user/${email}`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   allClothes = await res.json();
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div');
       div.className = 'grid-item';
       div.innerHTML = `
-        <img src="http://localhost:3000${item.imageUrl}" alt="${item.name}" style="width:100px;height:auto;"><br>
+        <img src="${API_BASE}${item.imageUrl}" alt="${item.name}" style="width:100px;height:auto;"><br>
         ${item.name}
       `;
       div.onclick = () => toggleSelection(item);
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    const res = await fetch('/api/outfits/create', {
+    const res = await fetch(`${API_BASE}/api/outfits/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       selectedItems = [];
       updateSelectedList();
       renderClothing(allClothes);
-      await loadPlannedOutfits(); // Load updated outfits after saving
+      await loadPlannedOutfits(); // Reload outfits after saving
     } else {
       alert('Failed to save outfit: ' + data.message);
     }
@@ -100,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load and display saved outfits
   async function loadPlannedOutfits() {
-    const res = await fetch(`http://localhost:3000/api/outfits/user/${email}`, {
+    const res = await fetch(`${API_BASE}/api/outfits/user/${email}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -123,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       outfit.clothingItems.forEach(item => {
         const img = document.createElement('img');
-        img.src = `http://localhost:3000${item.imageUrl}`;
+        img.src = `${API_BASE}${item.imageUrl}`;
         img.alt = item.name || 'clothing item';
         img.style.width = '80px';
         img.style.margin = '5px';
@@ -135,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  await loadPlannedOutfits(); // Call when page loads
+  await loadPlannedOutfits(); // Initial load
 });
 
 // Decode token to extract email

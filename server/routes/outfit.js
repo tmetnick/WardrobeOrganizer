@@ -32,7 +32,7 @@ router.post('/create', async (req, res) => {
 router.get('/user/:email', async (req, res) => {
   try {
     const outfits = await Outfit.find({ userEmail: req.params.email })
-      .populate('clothingItems'); // ⬅️ This is KEY for showing clothing info
+      .populate('clothingItems'); //  This is KEY for showing clothing info
 
     res.json(outfits);
   } catch (err) {

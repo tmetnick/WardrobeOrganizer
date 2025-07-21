@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const API_BASE = 'https://wardrobeorganizer.onrender.com';
+
   // Handle login form submission
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
@@ -9,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = e.target.password.value;
 
       try {
-        const response = await fetch('http://localhost:3000/api/login', {
+        const response = await fetch(`${API_BASE}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -18,14 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const data = await response.json();
-        console.log(' Backend response:', data);
+        console.log('Backend response:', data);
 
         if (response.ok) {
           alert('Login successful');
           localStorage.setItem('token', data.token);
           localStorage.setItem('role', data.role);
+          localStorage.setItem('email', data.email);
 
-          // Redirect to the new home page
+          // Redirect to the appropriate home page
           window.location.href = 'home.html';
         } else {
           alert(`Login failed: ${data.message || 'Invalid credentials'}`);
@@ -37,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  //  Handle signup form submission
+  // Handle signup form submission
   const signupForm = document.getElementById('signup-form');
   if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
@@ -47,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.getElementById('signup-password').value;
 
       try {
-        const response = await fetch('http://localhost:3000/api/signup', {
+        const response = await fetch(`${API_BASE}/api/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -56,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const data = await response.json();
-        console.log(' Signup response:', data);
+        console.log('Signup response:', data);
 
         if (response.ok) {
           alert('Signup successful! Please log in.');
